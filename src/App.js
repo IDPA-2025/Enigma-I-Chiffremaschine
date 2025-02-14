@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { UmkehrWalze } from "./UmkehrWalze.js"
+import {encrypt} from "./Walzen.js"
 import "./App.css";
 
 
@@ -7,20 +8,48 @@ let output = "";
 function App() {
   const [selectedLetters, setSelectedLetters] = useState("");
   const [output, setOutput] = useState("")
+  const [walze1, setWalze1] = useState(1)
+ 
   
   const handleClick = (letter) => {
-    const newLetter = UmkehrWalze(letter);
+    const Walze1Letter = encrypt(letter, walze1);
+    const ReflektorLetter = UmkehrWalze(Walze1Letter);
+  
     setSelectedLetters((prev) => prev + letter);
-    setOutput((prev) => prev + newLetter);
+    setOutput((prev) => prev + ReflektorLetter);
+  
+   
+    setWalze1((prev) => (prev + 1) % 27); 
   };
+  
 
- 
- 
+  function increment(){
+    if(walze1<26){
+      setWalze1(walze1 +1)
+    }
+  }
+
+  function decrement() {
+    if(walze1 > 1){
+      setWalze1(walze1 - 1);
+    }
+  }
+
   return (
    
 
     <div>
-  
+      <button onClick={increment}>🔼</button>
+      {walze1 }
+      <button onClick={decrement}>🔽</button>
+      <button onClick={increment}>🔼</button>
+      {walze1 }
+      <button onClick={decrement}>🔽</button>
+      <button onClick={increment}>🔼</button>
+      {walze1 }
+      <button onClick={decrement}>🔽</button>
+
+      <br></br>
       <button onClick={() => handleClick("a")}>a</button>
       <button onClick={() => handleClick("b")}>b</button>
       <button onClick={() => handleClick("c")}>c</button>
