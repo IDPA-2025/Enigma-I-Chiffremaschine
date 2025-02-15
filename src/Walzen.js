@@ -1,6 +1,6 @@
 const Alphapet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const Walze1 = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
-
+const Walze2 = "AJDKSIRUXBLHWTMCQGZNPYFVOE"
 
 export function encrypt(character, startAt){
     let rotatedWalze1 = Walze1;
@@ -21,4 +21,6 @@ export function encrypt(character, startAt){
 function rotateWalze(walze){
     return walze.slice(1) + walze[0];
 }
-
+function encryptWalze2(character){
+    return character;
+}

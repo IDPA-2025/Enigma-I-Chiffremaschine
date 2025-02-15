@@ -8,7 +8,7 @@ let output = "";
 function App() {
   const [selectedLetters, setSelectedLetters] = useState("");
   const [output, setOutput] = useState("")
-  const [walze1, setWalze1] = useState(1)
+  const [walze1, setWalze1] = useState()
  
   
   const handleClick = (letter) => {
