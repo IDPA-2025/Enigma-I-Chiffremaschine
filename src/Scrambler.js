@@ -4,7 +4,10 @@ class Scrambler{
     scramble(character){}
     rotateWalze(){}
     getCharPosition(character){
-        return character.charCodeAt(0) - 65;
+       
+        return character.toUpperCase().charCodeAt(0) - 65;
+        
+    
      }
 }
 module.exports = Scrambler; 

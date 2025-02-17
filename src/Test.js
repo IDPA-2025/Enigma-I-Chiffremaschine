@@ -1,18 +1,5 @@
-const Walze = require("./Walze.js");
+const Enigma = require('./enigma.js');
 
+const enigma1 = new Enigma("I",0   ,"II",0 ,"III",0 ,"B");
 
-const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const Walze1 = new Walze("EKMFLGDQVZNTOWYHXUSPAIBRCJ", 2, "Q")
-let ABC = new Set();
-
-for(let i = 0; i < Alphabet.length; i++){
-    ABC.add(Alphabet.charAt(i));
-}
-
-for(let i = 0; i < Alphabet.length; i++){
-    let result = Walze1.scramble(Alphabet.charAt(i));
-    if(ABC.delete(result) == false){
-       throw new Error("Error");
-    }
-}
-console.log("Test passed");
+console.log(enigma1.scramble("A"));
