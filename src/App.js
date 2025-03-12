@@ -36,20 +36,39 @@ function App() {
   }
 
   return (
-   
-
+  
     <div>
-      <button onClick={increment}>🔼</button>
-      {walze1 }
-      <button onClick={decrement}>🔽</button>
-      <button onClick={increment}>🔼</button>
-      {walze1 }
-      <button onClick={decrement}>🔽</button>
-      <button onClick={increment}>🔼</button>
-      {walze1 }
-      <button onClick={decrement}>🔽</button>
 
-      <br></br>
+
+    <label>
+         <input name="myInput" />
+      </label>
+      <label>
+     <input name="myInput" />
+      </label>
+      <label>
+   <input name="myInput" />
+      </label>
+      <label>
+      <input name="myInput" />
+      </label>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
       <button onClick={() => handleClick("a")}>a</button>
       <button onClick={() => handleClick("b")}>b</button>
       <button onClick={() => handleClick("c")}>c</button>

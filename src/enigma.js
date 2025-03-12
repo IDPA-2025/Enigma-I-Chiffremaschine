@@ -1,6 +1,7 @@
 const Scrambler = require('./Scrambler.js');
 const Reflektor = require("./Reflektor.js");
 const Walze = require("./Walze.js");
+const plugboard = require("./StecherBrett.js");
 
 class Enigma{
     constructor(W1, startW1, W2, startW2, W3, startW3, Reflector){
@@ -10,7 +11,8 @@ class Enigma{
         this.Walze1 = new Walze(W1, startW1, this.Walze2); 
     }
 
-    scramble(character){
+    scramble(character ){
+        //console.log(`Input: ${character}`);
         return this.Walze1.scramble(character);
     }
     rotateWalze(){

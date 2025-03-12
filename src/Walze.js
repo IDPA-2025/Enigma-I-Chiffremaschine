@@ -1,17 +1,3 @@
-class Scrambler{
-    constructor() {
-    }
-    scramble(character){}
-    rotateWalze(){}
-    getCharPosition(character){
-        console.log("getcharPos"+ character);
-        return character.toUpperCase().charCodeAt(0) - 65;
-        
-    
-     }
-}
-module.exports = Scrambler; 
-
 
     const Scrambler = require('./Scrambler.js');
 
@@ -41,25 +27,28 @@ class Walze extends Scrambler{
     getPosition(character){
         const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         let p = this.getCharPosition(character);
-        
-
-        p = (p - this.position + 26) % 26; 
-        
+         p = (p - this.position + 26) % 26; 
         return Alphabet.charAt(p);
     }
+    getPositionKeyAlphabet(character){
+       return this.KeyAlphabet.indexOf(character); 
+    }
+
     scramble(character){
-        console.log(character);
+        const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        console.log("Walze" + this.nextScrambler + " " + character);
         character = this.getPosition(character)
         let p = this.getCharPosition(character);
-       console.log(character);
         character = this.nextScrambler.scramble(this.KeyAlphabet.charAt(p))
 
         character = this.getPosition(character)
-        p = this.getCharPosition(character);
-        return this.KeyAlphabet.charAt(p);
+       console.log("Walze" + this.nextScrambler + " " + character);
+        p = this.getPositionKeyAlphabet(character);
+        return Alphabet.charAt(p);
     }
     rotateWalze(){
         if(this.position == this.getCharPosition(this.nextRotate)){
+            console.log("Rotating Walze " + this.nextScrambler);
             this.nextScrambler.rotateWalze();
             this.position= (this.position + 1) % 26;
         }else{
@@ -68,9 +57,7 @@ class Walze extends Scrambler{
     }
 
 
-
 }
 
-const Walze1 = new Walze("EKMFLGDQVZNTOWYHXUSPAIBRCJ", 2, "Q")
 
 module.exports = Walze;
