@@ -1,0 +1,52 @@
+.container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+
+  
+  .keyboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  
+  .keyboard-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .keyboard-row:nth-child(2) {
+    margin-left: 20px; /* Zweite Reihe leicht nach rechts verschieben */
+  }
+  
+  .keyboard-row:nth-child(3) {
+    margin-left: 40px; /* Dritte Reihe noch weiter nach rechts verschieben */
+  }
+  
+  .key {
+    padding: 15px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid black;
+    background-color: lightgray;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .key.active {
+    background-color: blue;
+    color: white;
+  }
+  
+  .key.output {
+    background-color: yellow;
+    color: black;
+  }
+  

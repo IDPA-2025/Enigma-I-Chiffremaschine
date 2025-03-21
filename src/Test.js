@@ -1,5 +1,11 @@
-const Enigma = require('./enigma.js');
+const Enigma = require("./enigma.js");
 
-const enigma1 = new Enigma("I",0   ,"II",0 ,"III",0 ,"A");
+// Beispiel für ein Steckerbrett: O <-> Z, A <-> T
+const plugboardSettings = new Map([
+    ["O", "Z"],
+]);
 
-console.log(enigma1.scramble("A"));
+const enigma = new Enigma("I", 0, "II", 0, "III", 0, "A", plugboardSettings);
+
+console.log(enigma.scramble("A"));
+

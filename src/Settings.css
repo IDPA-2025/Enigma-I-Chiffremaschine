@@ -1,0 +1,74 @@
+/* Settings.css */
+.settings-container {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .toggle-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .toggle-button:hover {
+    background-color: #45a049;
+  }
+  
+  .settings-panel {
+    background: #222;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .walzen-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .walze-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .walze-group label {
+    margin-right: 5px;
+  }
+  
+  .walze-group select, 
+  .walze-group input {
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .save-button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 15px;
+  }
+  
+  .save-button:hover {
+    background-color: #007bb5;
+  }
+  

@@ -1,106 +1,79 @@
 import { useState } from "react";
-import { UmkehrWalze } from "./UmkehrWalze.js"
-import {encrypt} from "./Walzen.js"
-import "./App.css";
+import Settings from "./settings.js";
+import Enigma from "./enigma.js";
+import "./styles.css";
 
+const keyboardLayout = [
+  ["Q", "W", "E", "R", "T", "Z", "U", "I", "O"],
+  ["A", "S", "D", "F", "G", "H", "J", "K"],
+  ["P", "Y", "X", "C", "V", "B", "N", "M", "L"],
+];
 
-let output = "";
-function App() {
-  const [selectedLetters, setSelectedLetters] = useState("");
-  const [output, setOutput] = useState("")
-  const [walze1, setWalze1] = useState()
- 
-  
-  const handleClick = (letter) => {
-    const Walze1Letter = encrypt(letter, walze1);
-    const ReflektorLetter = UmkehrWalze(Walze1Letter);
-  
-    setSelectedLetters((prev) => prev + letter);
-    setOutput((prev) => prev + ReflektorLetter);
-  
-   
-    setWalze1((prev) => (prev + 1) % 27); 
+const InputOutput = () => {
+  const [showSettings, setShowSettings] = useState(false);
+  const [config, setConfig] = useState(null);
+  const [enigma, setEnigma] = useState(null);
+  const [activeKey, setActiveKey] = useState(null);
+  const [outputKey, setOutputKey] = useState(null);
+
+  const initializeEnigma = (newConfig) => {
+    const { walze1, start1, walze2, start2, walze3, start3, reflektor, steckerbrett } = newConfig;
+    const plugboardMap = new Map(
+      steckerbrett.flatMap((pair) => [[pair[0], pair[1]], [pair[1], pair[0]]])
+    );
+    setEnigma(new Enigma(walze1, start1, walze2, start2, walze3, start3, reflektor, plugboardMap));
+    setConfig(newConfig);
   };
-  
 
-  function increment(){
-    if(walze1<26){
-      setWalze1(walze1 +1)
+  const handleKeyPress = (letter) => {
+    if (enigma) {
+      setActiveKey(letter);
+      const encodedLetter = enigma.encrypt(letter);
+      setOutputKey(encodedLetter);
     }
-  }
-
-  function decrement() {
-    if(walze1 > 1){
-      setWalze1(walze1 - 1);
-    }
-  }
+  };
 
   return (
+    <div className="container">
+      <button onClick={() => setShowSettings(true)} className="settings-btn">
+        Einstellungen
+      </button>
   
-    <div>
-
-
-    <label>
-         <input name="myInput" />
-      </label>
-      <label>
-     <input name="myInput" />
-      </label>
-      <label>
-   <input name="myInput" />
-      </label>
-      <label>
-      <input name="myInput" />
-      </label>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-      <button onClick={() => handleClick("a")}>a</button>
-      <button onClick={() => handleClick("b")}>b</button>
-      <button onClick={() => handleClick("c")}>c</button>
-      <button onClick={() => handleClick("d")}>d</button>
-      <button onClick={() => handleClick("e")}>e</button>
-      <button onClick={() => handleClick("f")}>f</button>
-      <button onClick={() => handleClick("g")}>g</button>
-      <button onClick={() => handleClick("h")}>h</button>
-      <button onClick={() => handleClick("i")}>i</button>
-      <button onClick={() => handleClick("j")}>j</button>
-      <button onClick={() => handleClick("k")}>k</button>
-      <button onClick={() => handleClick("l")}>l</button>
-      <button onClick={() => handleClick("m")}>m</button>
-      <button onClick={() => handleClick("n")}>n</button>
-      <button onClick={() => handleClick("o")}>o</button>
-      <button onClick={() => handleClick("p")}>p</button>
-      <button onClick={() => handleClick("q")}>q</button>
-      <button onClick={() => handleClick("r")}>r</button>
-      <button onClick={() => handleClick("s")}>s</button>
-      <button onClick={() => handleClick("t")}>t</button>
-      <button onClick={() => handleClick("u")}>u</button>
-      <button onClick={() => handleClick("v")}>v</button>
-      <button onClick={() => handleClick("w")}>w</button>
-      <button onClick={() => handleClick("x")}>x</button>
-      <button onClick={() => handleClick("y")}>y</button>
-      <button onClick={() => handleClick("z")}>z</button>
-
-     
-      <p>{output}</p>
-
+      {showSettings && <Settings onSave={initializeEnigma} onClose={() => setShowSettings(false)} />}
+  
+      {/* Ausgabe zuerst */}
+      <h2>Output</h2>
+      <div className="keyboard">
+        {keyboardLayout.map((row, rowIndex) => (
+          <div key={rowIndex} className="keyboard-row">
+            {row.map((letter) => (
+              <button key={letter} className={`key ${outputKey === letter ? "output" : ""}`}>
+                {letter}
+              </button>
+            ))}
+          </div>
+        ))}
+      </div>
+  
+      {/* Eingabe danach */}
+      <h2>Input</h2>
+      <div className="keyboard">
+        {keyboardLayout.map((row, rowIndex) => (
+          <div key={rowIndex} className="keyboard-row">
+            {row.map((letter) => (
+              <button
+                key={letter}
+                className={`key ${activeKey === letter ? "active" : ""}`}
+                onClick={() => handleKeyPress(letter)}
+              >
+                {letter}
+              </button>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
-}
+};
 
-export default App;
+export default InputOutput;
