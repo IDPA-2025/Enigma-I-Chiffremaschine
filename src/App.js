@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Settings from "./settings.js";
 import Enigma from "./enigma.js";
+import EnigmaVisualizer from "./draw.js"; // Import des Visualizers
 import "./styles.css";
 
 const keyboardLayout = [
@@ -15,6 +16,7 @@ const InputOutput = () => {
   const [enigma, setEnigma] = useState(null);
   const [activeKey, setActiveKey] = useState(null);
   const [outputKey, setOutputKey] = useState(null);
+  const [connections, setConnections] = useState([]); // Neu: Speichert Verbindungen für Visualisierung
 
   const initializeEnigma = (newConfig) => {
     const { walze1, start1, walze2, start2, walze3, start3, reflektor, steckerbrett } = newConfig;
@@ -28,8 +30,17 @@ const InputOutput = () => {
   const handleKeyPress = (letter) => {
     if (enigma) {
       setActiveKey(letter);
+      const path = enigma.getSignalPath(letter); // Methode zum Verbindungsweg holen
       const encodedLetter = enigma.encrypt(letter);
       setOutputKey(encodedLetter);
+
+      // Neu: Signalverbindungen speichern
+      const formattedConnections = path.map((step, index) => ({
+        from: step.from,
+        to: step.to,
+        row: index,
+      }));
+      setConnections(formattedConnections);
     }
   };
 
@@ -38,10 +49,12 @@ const InputOutput = () => {
       <button onClick={() => setShowSettings(true)} className="settings-btn">
         Einstellungen
       </button>
-  
       {showSettings && <Settings onSave={initializeEnigma} onClose={() => setShowSettings(false)} />}
-  
-      {/* Ausgabe zuerst */}
+      <br />
+
+      {/* Neu: Visualisierung */}
+      <EnigmaVisualizer connections={connections} />
+
       <h2>Output</h2>
       <div className="keyboard">
         {keyboardLayout.map((row, rowIndex) => (
@@ -54,8 +67,7 @@ const InputOutput = () => {
           </div>
         ))}
       </div>
-  
-      {/* Eingabe danach */}
+
       <h2>Input</h2>
       <div className="keyboard">
         {keyboardLayout.map((row, rowIndex) => (

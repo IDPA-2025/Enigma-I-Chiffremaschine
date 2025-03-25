@@ -29,6 +29,62 @@ class Enigma {
         this.rotateWalze(); 
         return encryptedChar; 
     }
+
+
+    getSignalPath(character) {
+        let path = [];
+        
+          // 1. Steckerbrett
+        let transformedChar = this.plugboard.scramble(character);
+        path.push({ from: character, to: transformedChar, row: 0 });
+
+
+        let tempchar = transformedChar;
+    
+        // 2. Walzen vorwärts
+        transformedChar = this.Walze1.scramble(transformedChar);
+        path.push({ from: tempchar, to: transformedChar, row: 1 });
+
+        tempchar = transformedChar;
+    
+        transformedChar = this.Walze2.scramble(transformedChar);
+        path.push({ from: tempchar, to: transformedChar, row: 2 });
+
+        tempchar = transformedChar;
+    
+        transformedChar = this.Walze3.scramble(transformedChar);
+        path.push({ from: tempchar, to: transformedChar, row: 3 });
+    
+        // 3. Reflektor
+        transformedChar = this.r.scramble(transformedChar);
+        path.push({ from: tempchar, to: transformedChar, row: 4 });
+    
+
+        tempchar = transformedChar;
+    
+        // 4. Walzen rückwärts
+        transformedChar = this.Walze3.scramble(transformedChar);
+        path.push({ from: tempchar, to: transformedChar, row: 5 });
+
+        tempchar = transformedChar;
+    
+        transformedChar = this.Walze2.scramble(transformedChar);
+        path.push({ from: tempchar, to: transformedChar, row: 6 });
+    
+        tempchar = transformedChar;
+
+        transformedChar = this.Walze1.scramble(transformedChar);
+        path.push({ from: tempchar, to: transformedChar, row: 7 });
+
+        tempchar = transformedChar;
+
+        // 5. Steckerbrett zurück
+        const finalOutput = this.plugboard.scramble(transformedChar);
+        path.push({ from: tempchar, to: finalOutput, row: 8 });
+    
+        return path;
+    }
+    
     
 }
 

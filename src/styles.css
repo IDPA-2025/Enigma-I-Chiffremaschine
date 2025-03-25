@@ -50,3 +50,18 @@
     color: black;
   }
   
+  .active {
+    background-color: yellow;
+  }
+  .output {
+    background-color: green;
+  }
+  .enigma-visual line {
+    stroke-dasharray: 5;
+    animation: dash 1s linear infinite;
+  }
+  @keyframes dash {
+    from { stroke-dashoffset: 10; }
+    to { stroke-dashoffset: 0; }
+  }
+  
