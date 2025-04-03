@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Settings from "./settings.js";
 import Enigma from "./enigma.js";
-import EnigmaVisualizer from "./draw.js"; // Import des Visualizers
+import EnigmaVisualizer from "./draw.js"; 
 import "./styles.css";
+
 
 const keyboardLayout = [
   ["Q", "W", "E", "R", "T", "Z", "U", "I", "O"],
@@ -16,7 +17,8 @@ const InputOutput = () => {
   const [enigma, setEnigma] = useState(null);
   const [activeKey, setActiveKey] = useState(null);
   const [outputKey, setOutputKey] = useState(null);
-  const [connections, setConnections] = useState([]); // Neu: Speichert Verbindungen für Visualisierung
+  const [koordinatenMap, setKoordinatenMap] = useState(new Map());
+
 
   const initializeEnigma = (newConfig) => {
     const { walze1, start1, walze2, start2, walze3, start3, reflektor, steckerbrett } = newConfig;
@@ -27,22 +29,20 @@ const InputOutput = () => {
     setConfig(newConfig);
   };
 
-  const handleKeyPress = (letter) => {
-    if (enigma) {
-      setActiveKey(letter);
-      const path = enigma.getSignalPath(letter); // Methode zum Verbindungsweg holen
-      const encodedLetter = enigma.encrypt(letter);
-      setOutputKey(encodedLetter);
 
-      // Neu: Signalverbindungen speichern
-      const formattedConnections = path.map((step, index) => ({
-        from: step.from,
-        to: step.to,
-        row: index,
-      }));
-      setConnections(formattedConnections);
-    }
-  };
+
+ const handleKeyPress = (letter) => {
+  if (enigma) {
+    setActiveKey(letter);
+    const encodedLetter = enigma.encrypt(letter);
+    setOutputKey(encodedLetter);
+
+    // Stelle sicher, dass du koordinatenMap über setKoordinatenMap aktualisierst
+    const newMap = enigma.getSignalPath(); // Du erhältst die neue Map hier
+    setKoordinatenMap(newMap); // Aktualisiere den Zustand mit der neuen Map
+  }
+};
+
 
   return (
     <div className="container">
@@ -53,7 +53,8 @@ const InputOutput = () => {
       <br />
 
       {/* Neu: Visualisierung */}
-      <EnigmaVisualizer connections={connections} />
+      <EnigmaVisualizer koordinatenMap={koordinatenMap} />
+
 
       <h2>Output</h2>
       <div className="keyboard">

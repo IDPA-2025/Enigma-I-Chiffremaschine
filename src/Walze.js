@@ -36,18 +36,26 @@ class Walze extends Scrambler{
 
     scramble(character){
         const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        
+       
+        Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
+        Scrambler.num++;
+        Scrambler.counter += 90;
         console.log("Walze" + this.nextScrambler + " " + character);
         character = this.getPosition(character)
         let p = this.getCharPosition(character);
         character = this.nextScrambler.scramble(this.KeyAlphabet.charAt(p))
-
         character = this.getPosition(character)
-       console.log("Walze" + this.nextScrambler + " " + character);
+        Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
+        Scrambler.num++;
+        Scrambler.counter -= 90;
+        console.log("Walze" + this.nextScrambler + " " + character);
         p = this.getPositionKeyAlphabet(character);
+        console.log(Alphabet.charAt(p));
         return Alphabet.charAt(p);
     }
     rotateWalze(){
-        if(this.position == this.getCharPosition(this.nextRotate)){
+        if(this.position === this.getCharPosition(this.nextRotate)){
             console.log("Rotating Walze " + this.nextScrambler);
             this.nextScrambler.rotateWalze();
             this.position= (this.position + 1) % 26;

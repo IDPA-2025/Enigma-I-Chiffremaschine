@@ -5,7 +5,7 @@ class Plugboard extends Scrambler {
         super();
         this.plugboardMap = new Map();
 
-        // Bidirektionale Zuordnung (A <-> B bedeutet auch B <-> A)
+        
         for (let [key, value] of plugboardMap) {
             this.plugboardMap.set(key, value);
             this.plugboardMap.set(value, key);
@@ -13,14 +13,19 @@ class Plugboard extends Scrambler {
     }
 
     scramble(letter) {
+        if(!this.plugboardMap.has(letter)) {
+            Scrambler.counter = 60;
+            console.log("Plugboard: " + letter + " not in map, returning original letter.");
+            Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(letter)]);
+            Scrambler.num++;
+            Scrambler.counter += 90;    
+            return letter; 
+        }
         return this.plugboardMap.get(letter) || letter; 
     }
 }
 
-const plugboard1 = new Plugboard(new Map([
-    ["O", "Z"],
-    ["A", "T"]
-]));
+
 
 
 module.exports = Plugboard;

@@ -7,23 +7,21 @@ const Settings = ({ onSave, onClose }) => {
   const [start2, setStart2] = useState(0);
   const [walze3, setWalze3] = useState("III");
   const [start3, setStart3] = useState(0);
-  const [reflektor, setReflektor] = useState("B");
+  const [reflektor, setReflektor] = useState("A");
   const [steckerbrett, setSteckerbrett] = useState([]);
   const [newPair, setNewPair] = useState("");
 
-  const addSteckerbrettPair = () => {
-    if (newPair.length === 2 && newPair[0] !== newPair[1]) {
-      const pairArray = newPair.split("");
-      const exists = steckerbrett.some(
-        (pair) =>
-          (pair[0] === pairArray[0] && pair[1] === pairArray[1]) ||
-          (pair[0] === pairArray[1] && pair[1] === pairArray[0])
-      );
-      if (!exists) {
-        setSteckerbrett((prev) => [...prev, pairArray]);
-        setNewPair("");
-      }
-    }
+  const walzenOptions = ["I", "II", "III", "IV", "V"];
+
+  
+  const getAvailableOptions = (selectedWalzen, currentValue) => {
+    return walzenOptions.filter((w) => !selectedWalzen.includes(w) || w === currentValue);
+  };
+
+  const handleWalzeChange = (index, value) => {
+    if (index === 0) setWalze1(value);
+    if (index === 1) setWalze2(value);
+    if (index === 2) setWalze3(value);
   };
 
   const handleSave = () => {
@@ -36,33 +34,39 @@ const Settings = ({ onSave, onClose }) => {
       <div className="settings-container">
         <h2>Einstellungen</h2>
 
-        {[walze1, walze2, walze3].map((walze, index) => (
-          <div key={index}>
-            <label>Walze {index + 1}:</label>
-            <select
-              value={walze}
-              onChange={(e) =>
-                index === 0 ? setWalze1(e.target.value) : index === 1 ? setWalze2(e.target.value) : setWalze3(e.target.value)
-              }
-            >
-              {["I", "II", "III", "IV", "V"].map((w) => (
-                <option key={w} value={w}>
-                  {w}
-                </option>
-              ))}
-            </select>
-            <label>Startposition:</label>
-            <input
-              type="number"
-              min="0"
-              max="25"
-              value={index === 0 ? start1 : index === 1 ? start2 : start3}
-              onChange={(e) =>
-                index === 0 ? setStart1(Number(e.target.value)) : index === 1 ? setStart2(Number(e.target.value)) : setStart3(Number(e.target.value))
-              }
-            />
-          </div>
-        ))}
+        {[walze1, walze2, walze3].map((walze, index) => {
+          const selectedWalzen = [walze1, walze2, walze3];
+
+          return (
+            <div key={index}>
+              <label>Walze {index + 1}:</label>
+              <select
+                value={walze}
+                onChange={(e) => handleWalzeChange(index, e.target.value)}
+              >
+                {getAvailableOptions(selectedWalzen, walze).map((w) => (
+                  <option key={w} value={w}>
+                    {w}
+                  </option>
+                ))}
+              </select>
+              <label>Startposition:</label>
+              <input
+                type="number"
+                min="0"
+                max="25"
+                value={index === 0 ? start1 : index === 1 ? start2 : start3}
+                onChange={(e) =>
+                  index === 0
+                    ? setStart1(Number(e.target.value))
+                    : index === 1
+                    ? setStart2(Number(e.target.value))
+                    : setStart3(Number(e.target.value))
+                }
+              />
+            </div>
+          );
+        })}
 
         <label>Umkehrwalze:</label>
         <select value={reflektor} onChange={(e) => setReflektor(e.target.value)}>
@@ -75,7 +79,17 @@ const Settings = ({ onSave, onClose }) => {
 
         <h3>Steckerbrett</h3>
         <input type="text" maxLength="2" value={newPair} onChange={(e) => setNewPair(e.target.value.toUpperCase())} />
-        <button onClick={addSteckerbrettPair}>Paar hinzufügen</button>
+        <button onClick={() => {
+          if (newPair.length === 2 && newPair[0] !== newPair[1]) {
+            const pairArray = newPair.split("");
+            if (!steckerbrett.some(pair => pair.includes(pairArray[0]) || pair.includes(pairArray[1]))) {
+              setSteckerbrett([...steckerbrett, pairArray]);
+              setNewPair("");
+            }
+          }
+        }}>
+          Paar hinzufügen
+        </button>
         <ul>
           {steckerbrett.map((pair, index) => (
             <li key={index}>
