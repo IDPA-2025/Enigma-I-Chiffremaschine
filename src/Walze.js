@@ -34,9 +34,10 @@ class Walze extends Scrambler{
        return this.KeyAlphabet.indexOf(character); 
     }
 
+    
+    
     scramble(character){
         const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        
        
         Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
         Scrambler.num++;
@@ -44,16 +45,46 @@ class Walze extends Scrambler{
         console.log("Walze" + this.nextScrambler + " " + character);
         character = this.getPosition(character)
         let p = this.getCharPosition(character);
+        console.log("vor UKW")
         character = this.nextScrambler.scramble(this.KeyAlphabet.charAt(p))
+
+
+
+
+
+
+
+
+
+
+
+        console.log("nach UKW")
         character = this.getPosition(character)
+        console.log("character: " + character)  
+        console.log("Position:" + this.position)
+
+
+
         Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
         Scrambler.num++;
         Scrambler.counter -= 90;
+
+
+
         console.log("Walze" + this.nextScrambler + " " + character);
         p = this.getPositionKeyAlphabet(character);
-        console.log(Alphabet.charAt(p));
         return Alphabet.charAt(p);
     }
+
+    rotateWalze() {
+        const rotated = this.KeyAlphabet.slice(1) + this.KeyAlphabet[0];
+        this.KeyAlphabet = rotated;
+    }
+    
+    
+    
+    
+    /*
     rotateWalze(){
         if(this.position === this.getCharPosition(this.nextRotate)){
             console.log("Rotating Walze " + this.nextScrambler);
@@ -63,6 +94,9 @@ class Walze extends Scrambler{
             this.position= (this.position + 1) % 26;
            }    
     }
+    */
+
+    
 
 
 }

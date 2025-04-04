@@ -11,6 +11,7 @@
             this.KeyAlphabet = ReflektorKeyMap.get(type);   
         }
         scramble(character){
+            console.log("Start Reflektor ")
             let position = this.getCharPosition(character);
             let reflectedChar = this.KeyAlphabet.charAt(position);
             Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
