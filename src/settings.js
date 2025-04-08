@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './Settings.css';
 
 const Settings = ({ onSave, onClose }) => {
   const [walze1, setWalze1] = useState("I");

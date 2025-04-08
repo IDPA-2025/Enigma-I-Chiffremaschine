@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import Settings from "./settings.js";
 import Enigma from "./enigma.js";
 import EnigmaVisualizer from "./draw.js"; 
@@ -29,7 +29,10 @@ const InputOutput = () => {
     setConfig(newConfig);
   };
 
-
+  useEffect(() => {
+    document.title = 'Enigma Visualizer';
+  }, []);
+  
 
  const handleKeyPress = (letter) => {
   if (enigma) {

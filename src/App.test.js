@@ -1,4 +1,4 @@
-const Enigma = require('./Enigma');
+const Enigma = require('./enigma');
 const { describe, test, expect } = require('@jest/globals');
 
 describe("Enigma Machine Tests", () => {

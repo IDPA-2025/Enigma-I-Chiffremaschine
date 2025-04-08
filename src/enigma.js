@@ -25,6 +25,14 @@ class Enigma {
 
     rotateWalze() {
         this.Walze1.rotateWalze();
+        
+        if(this.Walze1.position === this.Walze1.nextRotate) {   
+            this.Walze2.rotateWalze();
+        }
+        if(this.Walze2.position === this.Walze2.nextRotate) {   
+            this.Walze3.rotateWalze();
+        }
+            
     }
 
   
@@ -35,11 +43,16 @@ class Enigma {
         Scrambler.counter = 60;
         const encryptedChar = this.scramble(character); 
         this.rotateWalze();
+        if(character === encryptedChar) {
+            throw new Error("Error: Character cannot be the same after encryption.");
+        }
+        
         return encryptedChar;  
     } 
 
     
     getSignalPath() {
+        console.log(Scrambler.pathMap);
         return Scrambler.pathMap;   
     }
 }
