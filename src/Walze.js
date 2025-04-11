@@ -26,76 +26,58 @@ class Walze extends Scrambler{
     }
     getPosition(character){
         const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        let p = this.getCharPosition(character);
+        let p = Scrambler.getCharPosition(character);
          p = (p - this.position + 26) % 26; 
         return Alphabet.charAt(p);
     }
     getPositionKeyAlphabet(character){
        return this.KeyAlphabet.indexOf(character); 
     }
+    getNotchPosition() {
+        return Scrambler.getCharPosition(this.nextRotate);
+    }
+    
 
     
     
-    scramble(character){
+    scramble(character) {
         const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-       
+    
+        // Vorwärts Richtung – VOR Weiterleitung an nächste Walze
         Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
         Scrambler.num++;
         Scrambler.counter += 90;
-        console.log("Walze" + this.nextScrambler + " " + character);
-        character = this.getPosition(character)
-        let p = this.getCharPosition(character);
-        console.log("vor UKW")
-        character = this.nextScrambler.scramble(this.KeyAlphabet.charAt(p))
-
-
-
-
-
-
-
-
-
-
-
-        console.log("nach UKW")
-        character = this.getPosition(character)
-        console.log("character: " + character)  
-        console.log("Position:" + this.position)
-
-
-
+    
+        console.log(`Walze (vorwärts): input=${character}, Position=${this.position}`);
+    
+        // Step 1: Input verschoben um Position, dann aus KeyAlphabet lesen
+        let p = (Scrambler.getCharPosition(character) + this.position) % 26;
+        character = this.KeyAlphabet.charAt(p);
+    
+        // Step 2: Weiter an nächste Walze (oder Reflektor)
+        character = this.nextScrambler.scramble(character);
+    
+        // Rückwärts Richtung – NACH Rückgabe von nächster Walze/Reflektor
+        console.log(`Walze (rückwärts): input=${character}, Position=${this.position}`);
+    
+        // Step 3: Finde Buchstaben im KeyAlphabet
+        p = this.KeyAlphabet.indexOf(character);
+        p = (p - this.position + 26) % 26;
+        character = Alphabet.charAt(p);
+    
+        // Logging & Map-Update für Rückweg
         Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
         Scrambler.num++;
         Scrambler.counter -= 90;
-
-
-
-        console.log("Walze" + this.nextScrambler + " " + character);
-        p = this.getPositionKeyAlphabet(character);
-        return Alphabet.charAt(p);
+    
+        return character;
     }
+    
 
     rotateWalze() {
-        const rotated = this.KeyAlphabet.slice(1) + this.KeyAlphabet[0];
-        this.KeyAlphabet = rotated;
+        this.position = (this.position + 1) % 26;
+        console.log(`Walze rotiert auf Position: ${this.position} (${String.fromCharCode(65 + this.position)})`);
     }
-    
-    
-    
-    
-    /*
-    rotateWalze(){
-        if(this.position === this.getCharPosition(this.nextRotate)){
-            console.log("Rotating Walze " + this.nextScrambler);
-            this.nextScrambler.rotateWalze();
-            this.position= (this.position + 1) % 26;
-        }else{
-            this.position= (this.position + 1) % 26;
-           }    
-    }
-    */
-
     
 
 

@@ -5,7 +5,7 @@ class Scrambler{
     static counter = 60;
     static num = 0;
     rotateWalze(){}
-    getCharPosition(character){
+    static getCharPosition(character){
         return character.toUpperCase().charCodeAt(0) - 65;
     }
 

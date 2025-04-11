@@ -13,7 +13,7 @@ const drawRectWithLabel = (
   height,
   label = '',
   rectColor = 'lightgray',
-  textColor = 'black',
+  textColor = 'white',
   font = '16px Arial'
 ) => {
   // Rechteck
@@ -94,7 +94,7 @@ const EnigmaVisualizer = ({ koordinatenMap }) => {
         ctx.beginPath();
         ctx.moveTo(previousPoint[0], previousPoint[1]);
         ctx.lineTo(x, y);
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = "red";
         ctx.stroke();
       }
 

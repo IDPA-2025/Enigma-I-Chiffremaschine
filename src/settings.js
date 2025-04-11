@@ -14,7 +14,6 @@ const Settings = ({ onSave, onClose }) => {
 
   const walzenOptions = ["I", "II", "III", "IV", "V"];
 
-  
   const getAvailableOptions = (selectedWalzen, currentValue) => {
     return walzenOptions.filter((w) => !selectedWalzen.includes(w) || w === currentValue);
   };
@@ -35,39 +34,45 @@ const Settings = ({ onSave, onClose }) => {
       <div className="settings-container">
         <h2>Einstellungen</h2>
 
-        {[walze1, walze2, walze3].map((walze, index) => {
-          const selectedWalzen = [walze1, walze2, walze3];
+        <div className="walzen-grid">
+          {[walze1, walze2, walze3].map((walze, index) => {
+            const selectedWalzen = [walze1, walze2, walze3];
 
-          return (
-            <div key={index}>
-              <label>Walze {index + 1}:</label>
-              <select
-                value={walze}
-                onChange={(e) => handleWalzeChange(index, e.target.value)}
-              >
-                {getAvailableOptions(selectedWalzen, walze).map((w) => (
-                  <option key={w} value={w}>
-                    {w}
-                  </option>
-                ))}
-              </select>
-              <label>Startposition:</label>
-              <input
-                type="number"
-                min="0"
-                max="25"
-                value={index === 0 ? start1 : index === 1 ? start2 : start3}
-                onChange={(e) =>
-                  index === 0
-                    ? setStart1(Number(e.target.value))
-                    : index === 1
-                    ? setStart2(Number(e.target.value))
-                    : setStart3(Number(e.target.value))
-                }
-              />
-            </div>
-          );
-        })}
+            return (
+              <div key={index} className="walzen-row">
+                <div className="walze">
+                  <label>Walze {index + 1}:</label>
+                  <select
+                    value={walze}
+                    onChange={(e) => handleWalzeChange(index, e.target.value)}
+                  >
+                    {getAvailableOptions(selectedWalzen, walze).map((w) => (
+                      <option key={w} value={w}>
+                        {w}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="position">
+                  <label>Startposition:</label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="25"
+                    value={index === 0 ? start1 : index === 1 ? start2 : start3}
+                    onChange={(e) =>
+                      index === 0
+                        ? setStart1(Number(e.target.value))
+                        : index === 1
+                        ? setStart2(Number(e.target.value))
+                        : setStart3(Number(e.target.value))
+                    }
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
         <label>Umkehrwalze:</label>
         <select value={reflektor} onChange={(e) => setReflektor(e.target.value)}>

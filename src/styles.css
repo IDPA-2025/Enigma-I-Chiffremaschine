@@ -1,67 +1,123 @@
-.container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    text-align: center;
-  }
-  
+body {
+  background-color: #1b1b1b;
+  color: #ffffff;
+  font-family: 'Georgia', serif;
+  padding: 2rem;
+  padding-top: 4rem;  /* Platz für den Header */
+  padding-bottom: 3rem;
+}
 
-  
-  .keyboard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    margin-top: 10px;
-  }
-  
-  .keyboard-row {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .keyboard-row:nth-child(2) {
-    margin-left: 20px; /* Zweite Reihe leicht nach rechts verschieben */
-  }
-  
-  .keyboard-row:nth-child(3) {
-    margin-left: 40px; /* Dritte Reihe noch weiter nach rechts verschieben */
-  }
-  
-  .key {
-    padding: 15px;
-    width: 40px;
-    height: 40px;
-    border: 2px solid black;
-    background-color: lightgray;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .key.active {
-    background-color: blue;
-    color: white;
-  }
-  
-  .key.output {
-    background-color: yellow;
-    color: black;
-  }
-  
-  .active {
-    background-color: yellow;
-  }
-  .output {
-    background-color: green;
-  }
-  .enigma-visual line {
-    stroke-dasharray: 5;
-    animation: dash 1s linear infinite;
-  }
-  @keyframes dash {
-    from { stroke-dashoffset: 10; }
-    to { stroke-dashoffset: 0; }
-  }
-  
+.container {
+  text-align: center;
+}
+
+.settings-btn {
+  background-color: #696461;
+  color: #fffdf6;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.settings-btn:hover {
+  background-color: #bcbcbc;
+}
+
+.keyboard {
+  display: inline-block;
+  margin: 1rem auto;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.key {
+  width: 42px;
+  height: 42px;
+  background-color: #696461;
+  border: 1px solid #5b5b5b;
+  color: #fff8e1;
+  font-size: 16px;
+  margin: 3px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.key.active {
+  background-color: #ffbf00;
+  color: #4e2e1e;
+  font-weight: bold;
+}
+
+.key.output {
+  background-color: #fff200;
+  color: #3b241a;
+  font-weight: bold;
+}
+
+.warning {
+  font-weight: bold;
+  padding: 1rem;
+  border: 2px dashed darkred;
+  background-color: #ffecec;
+  border-radius: 8px;
+  text-align: center;
+}
+.app-header {
+  width: 100%;
+  background-color: #3b3b3b;
+  color: #f5f0e1;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border-bottom: 2px solid #000000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.app-header h1 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.app-header .subtitle {
+  font-size: 0.8rem;
+  margin: 0;
+  color: #dbcbb3;
+}
+
+.app-footer {
+  width: 100%;
+  background-color: #3b3b3b;
+  color: #f5f0e1;
+  text-align: center;
+  padding: 0.5rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 2px solid #000000;
+  font-size: 0.8rem;
+
+}
+
+.app-footer a {
+  color: #f5f0e1;
+  text-decoration: underline;
+  margin: 0 0.5rem;
+}
+
+.app-footer a:hover {
+  color: #ffffff;
+}

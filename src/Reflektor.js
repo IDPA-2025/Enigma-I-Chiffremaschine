@@ -10,16 +10,24 @@
             super();
             this.KeyAlphabet = ReflektorKeyMap.get(type);   
         }
-        scramble(character){
-            console.log("Start Reflektor ")
-            let position = this.getCharPosition(character);
-            let reflectedChar = this.KeyAlphabet.charAt(position);
+        scramble(character) {
+            console.log("Start Reflektor");
+
             Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
             Scrambler.num++;
+        
+            const position = Scrambler.getCharPosition(character);
+            const reflectedChar = this.KeyAlphabet.charAt(position);
+        
+            Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(reflectedChar)]);
+            Scrambler.num++;
+            Scrambler.counter -= 90;
+        
             console.log(`Reflektor: ${character} → ${reflectedChar}`);
         
             return reflectedChar;
         }
+        
         
     }
 

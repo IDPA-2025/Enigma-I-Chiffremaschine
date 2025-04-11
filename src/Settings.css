@@ -1,74 +1,117 @@
-/* Settings.css */
+.settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #3b3b3b; 
+  display: flex;
+  justify-content: center;  
+  align-items: center;
+  z-index: 10;
+}
+
 .settings-container {
-    text-align: center;
-    margin: 20px;
-  }
-  
-  .toggle-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .toggle-button:hover {
-    background-color: #45a049;
-  }
-  
-  .settings-panel {
-    background: #222;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  
-  h2 {
-    font-size: 20px;
-    margin-bottom: 15px;
-  }
-  
-  .walzen-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .walze-group {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .walze-group label {
-    margin-right: 5px;
-  }
-  
-  .walze-group select, 
-  .walze-group input {
-    padding: 5px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: none;
-  }
-  
-  .save-button {
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 15px;
-  }
-  
-  .save-button:hover {
-    background-color: #007bb5;
-  }
-  
+  background-color: #252525;
+  color: #f5f0e1;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 600px;
+  box-shadow: 0 0 20px rgba(54, 54, 54, 0.7);
+  border: 2px solid #000000;
+}
+
+.walzen-grid {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.walzen-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.walze,
+.position {
+  flex: 1;
+}
+
+.walze label,
+.position label {
+  display: block;
+  font-weight: bold;
+  color: #dbcbb3;
+}
+
+.walze select,
+.position input {
+  width: 100%;
+  padding: 6px;
+  background-color: #444;
+  color: #fffdf6;
+  border: 1px solid #999;
+  border-radius: 6px;
+}
+
+.settings-container h3 {
+  color: #f5f0e1;
+}
+
+.settings-container input[type="text"] {
+  background-color: #444;
+  color: #fffdf6;
+  border: 1px solid #999;
+  padding: 6px;
+  border-radius: 6px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.settings-container button {
+  background-color: #3b3b3b;
+  color: #fffdf6;
+  border: none;
+  padding: 8px 16px;
+  margin-top: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.settings-container button:hover {
+  background-color: #8e8e8e;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+ul li {
+  padding: 4px 0;
+  color: #d9b38c;
+}
+
+.settings-container label {
+  display: block;
+  margin-top: 15px;
+  color: #dbcbb3;
+  font-weight: bold;
+}
+
+.settings-container select {
+  border: 1px solid #999;
+  padding: 6px;
+  border-radius: 6px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.settings-container select:focus {
+  outline: none;
+  border-color: #ffbf00;
+}

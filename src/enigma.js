@@ -19,36 +19,43 @@ class Enigma {
         transformedChar = this.Walze1.scramble(transformedChar);
         Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(transformedChar)]);
         Scrambler.num++;
+        Scrambler.counter -= 90;
         transformedChar = this.plugboard.scramble(transformedChar);
         return transformedChar;
     }
-
-    rotateWalze() {
-        this.Walze1.rotateWalze();
-        
-        if(this.Walze1.position === this.Walze1.nextRotate) {   
-            this.Walze2.rotateWalze();
-        }
-        if(this.Walze2.position === this.Walze2.nextRotate) {   
+    rotateWalzen() {
+        const notch1 = this.Walze1.getNotchPosition();
+        const notch2 = this.Walze2.getNotchPosition();
+    
+        // Double-Stepping: Wenn Walze2 an ihrer Kerbe ist, dreht sich Walze3
+        if (this.Walze2.position === notch2) {
             this.Walze3.rotateWalze();
         }
-            
+    
+        // Wenn Walze1 an ihrer Kerbe ist, dreht sich Walze2
+        if (this.Walze1.position === notch1) {
+            this.Walze2.rotateWalze();
+        }
+    
+        // Walze1 rotiert immer
+        this.Walze1.rotateWalze();
     }
+    
+    
 
   
     encrypt(character) {
         Scrambler.num = 0;
         Scrambler.deletePathmap();
-
         Scrambler.counter = 60;
-        const encryptedChar = this.scramble(character); 
-        this.rotateWalze();
-        if(character === encryptedChar) {
+        this.rotateWalzen(); // ✅ Rotiere zuerst – wie in echter Enigma!
+        const encryptedChar = this.scramble(character);
+        if (character === encryptedChar) {
             throw new Error("Error: Character cannot be the same after encryption.");
         }
-        
-        return encryptedChar;  
-    } 
+        return encryptedChar;
+    }
+    
 
     
     getSignalPath() {
