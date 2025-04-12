@@ -12,18 +12,22 @@ class Plugboard extends Scrambler {
         }
     }
 
-    scramble(letter) {
-        Scrambler.counter = 60;
+    scramble(letter, phase = "hin") {
         const mappedLetter = this.plugboardMap.get(letter) || letter;
     
-        console.log(`Plugboard: ${letter} → ${mappedLetter}`);
-    
-        Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(letter)]);
-        Scrambler.num++;
-        Scrambler.counter += 90;
+        if (phase === "hin") {
+            Scrambler.counter = 60;
+            Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(letter)]);
+            Scrambler.num++;
+            Scrambler.counter += 90;
+        } else if (phase === "zurück") {
+            Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(mappedLetter)]);
+            Scrambler.num++;
+        }
     
         return mappedLetter;
-    }   
+    }
+     
 }
 
 module.exports = Plugboard;

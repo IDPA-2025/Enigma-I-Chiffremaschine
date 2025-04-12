@@ -76,12 +76,7 @@ class Walze extends Scrambler{
 
     rotateWalze() {
         this.position = (this.position + 1) % 26;
-        console.log(`Walze rotiert auf Position: ${this.position} (${String.fromCharCode(65 + this.position)})`);
     }
-    
-
-
 }
-
 
 module.exports = Walze;

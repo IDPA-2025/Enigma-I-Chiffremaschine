@@ -15,30 +15,30 @@ class Enigma {
     }
 
     scramble(character) {
-        let transformedChar = this.plugboard.scramble(character);
-        transformedChar = this.Walze1.scramble(transformedChar);
-        Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(transformedChar)]);
-        Scrambler.num++;
-        Scrambler.counter -= 90;
-        transformedChar = this.plugboard.scramble(transformedChar);
+        let transformedChar = this.plugboard.scramble(character, "hin"); // Hinweg Plugboard
+        transformedChar = this.Walze1.scramble(transformedChar);         // Walzen
+        transformedChar = this.plugboard.scramble(transformedChar, "zurück"); // Rückweg Plugboard ✔
+        
         return transformedChar;
     }
     rotateWalzen() {
         const notch1 = this.Walze1.getNotchPosition();
         const notch2 = this.Walze2.getNotchPosition();
     
-        // Double-Stepping: Wenn Walze2 an ihrer Kerbe ist, dreht sich Walze3
-        if (this.Walze2.position === notch2) {
-            this.Walze3.rotateWalze();
+        // Double-Stepping: Wenn Walze1 an ihrer Notch ist, rotiert Walze2.
+        // Wenn Walze2 AN IHRER NOTCH ist, rotiert Walze3 – unabhängig von Walze1.
+        const walze1AtNotch = this.Walze1.position === notch1;
+        const walze2AtNotch = this.Walze2.position === notch2;
+    
+        if (walze2AtNotch) {
+            this.Walze3.rotateWalze(); // Linke Walze
         }
     
-        // Wenn Walze1 an ihrer Kerbe ist, dreht sich Walze2
-        if (this.Walze1.position === notch1) {
-            this.Walze2.rotateWalze();
+        if (walze1AtNotch || walze2AtNotch) {
+            this.Walze2.rotateWalze(); // Mittlere Walze rotiert auch bei Double-Stepping
         }
-    
-        // Walze1 rotiert immer
-        this.Walze1.rotateWalze();
+        console.log(`Rotation: W1=${this.Walze1.position}, W2=${this.Walze2.position}, W3=${this.Walze3.position}`);
+        this.Walze1.rotateWalze(); // Rechte Walze immer
     }
     
     
