@@ -3,11 +3,11 @@ import './Settings.css';
 
 const Settings = ({ onSave, onClose }) => {
   const [walze1, setWalze1] = useState("I");
-  const [start1, setStart1] = useState(0);
+  const [start1, setStart1] = useState(1);
   const [walze2, setWalze2] = useState("II");
-  const [start2, setStart2] = useState(0);
+  const [start2, setStart2] = useState(1);
   const [walze3, setWalze3] = useState("III");
-  const [start3, setStart3] = useState(0);
+  const [start3, setStart3] = useState(1);
   const [reflektor, setReflektor] = useState("A");
   const [steckerbrett, setSteckerbrett] = useState([]);
   const [newPair, setNewPair] = useState("");

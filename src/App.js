@@ -24,8 +24,8 @@ const InputOutput = () => {
     const { walze1, start1, walze2, start2, walze3, start3, reflektor, steckerbrett } = newConfig;
     const plugboardMap = new Map(
       steckerbrett.flatMap((pair) => [[pair[0], pair[1]], [pair[1], pair[0]]])
-    );
-    setEnigma(new Enigma(walze1, start1, walze2, start2, walze3, start3, reflektor, plugboardMap));
+      );
+    setEnigma(new Enigma(walze1, start1-1, walze2, start2-1, walze3, start3-1, reflektor, plugboardMap));
     setConfig(newConfig);
   };
 
@@ -85,7 +85,7 @@ const InputOutput = () => {
       <br />
 
       {/* Neu: Visualisierung */}
-      <EnigmaVisualizer koordinatenMap={koordinatenMap} />
+      <EnigmaVisualizer koordinatenMap={koordinatenMap} enigma={enigma} />
 
       <h2>Output</h2>
       <div className="keyboard">

@@ -14,7 +14,8 @@ const drawRectWithLabel = (
   label = '',
   rectColor = 'lightgray',
   textColor = 'white',
-  font = '16px Arial'
+  font = '16px Arial',
+  walzePosition = null // Parameter für die Walzenposition
 ) => {
   // Rechteck
   ctx.fillStyle = rectColor;
@@ -34,14 +35,25 @@ const drawRectWithLabel = (
 
     ctx.restore(); // Zurück zur ursprünglichen Transformation
   }
+
+  // Wenn Walzenposition vorhanden ist, zeichne die Position neben dem Rechteck
+  if (walzePosition !== null) {
+    ctx.save();
+    ctx.scale(1, -1); // Wiederherstellen der Transformation
+    ctx.fillStyle = "white";
+    ctx.font = "16px Arial";
+    ctx.fillText(`Pos: ${walzePosition}`, x + width + 20, -y); // Position der Walze an der Seite
+    ctx.restore();
+  }
 };
 
 
-const EnigmaVisualizer = ({ koordinatenMap }) => {
+
+const EnigmaVisualizer = ({ koordinatenMap, enigma }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    if (!koordinatenMap) return;
+    if (!koordinatenMap || !enigma) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -57,17 +69,13 @@ const EnigmaVisualizer = ({ koordinatenMap }) => {
     ctx.scale(1, -1);
     ctx.translate(-width / 2, -height / 2);
 
-    
-
-    
-
+    // Zeichne Rechtecke für das Steckerbrett und die Walzen
     drawRectWithLabel(ctx, 10, 40, 580, 50, 'Steckerbrett');
-    drawRectWithLabel(ctx, 10, 130, 580, 50, 'Walze 1');
-    drawRectWithLabel(ctx, 10, 220, 580, 50, 'Walze 2');
-    drawRectWithLabel(ctx, 10, 310, 580, 50, 'Walze 3');
+    drawRectWithLabel(ctx, 10, 130, 580, 50, 'Walze 1', 'lightgray', 'white', '16px Arial', enigma.Walze1.position+1);
+    drawRectWithLabel(ctx, 10, 220, 580, 50, 'Walze 2', 'lightgray', 'white', '16px Arial', enigma.Walze2.position+1);
+    drawRectWithLabel(ctx, 10, 310, 580, 50, 'Walze 3', 'lightgray', 'white', '16px Arial', enigma.Walze3.position+1);
     drawRectWithLabel(ctx, 10, 400, 580, 50, 'Reflektor');
     
-
     // Punkte und Linien zeichnen
     let previousPoint = null;
 
@@ -101,16 +109,17 @@ const EnigmaVisualizer = ({ koordinatenMap }) => {
       previousPoint = [x, y];
     });
 
-  }, [koordinatenMap]);
+  }, [koordinatenMap, enigma]);
 
   return (
     <canvas
       ref={canvasRef}
-      width={600}
+      width={700}
       height={500}
       style={{ border: "1px solid black" }}
     />
   );
 };
+
 
 export default EnigmaVisualizer;
