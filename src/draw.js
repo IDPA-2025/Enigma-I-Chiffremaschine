@@ -72,8 +72,8 @@ const EnigmaVisualizer = ({ koordinatenMap, enigma }) => {
     // Zeichne Rechtecke für das Steckerbrett und die Walzen
     drawRectWithLabel(ctx, 10, 40, 580, 50, 'Steckerbrett');
     drawRectWithLabel(ctx, 10, 130, 580, 50, 'Walze 1', 'lightgray', 'white', '16px Arial', enigma.Walze1.position+1);
-    drawRectWithLabel(ctx, 10, 220, 580, 50, 'Walze 2', 'lightgray', 'white', '16px Arial', enigma.Walze2.position+1);
-    drawRectWithLabel(ctx, 10, 310, 580, 50, 'Walze 3', 'lightgray', 'white', '16px Arial', enigma.Walze3.position+1);
+    drawRectWithLabel(ctx, 10, 220, 580, 50, 'Walze 2', 'lightgray', 'white', '16px Arial', enigma.Walze2.position);
+    drawRectWithLabel(ctx, 10, 310, 580, 50, 'Walze 3', 'lightgray', 'white', '16px Arial', enigma.Walze3.position  );
     drawRectWithLabel(ctx, 10, 400, 580, 50, 'Reflektor');
     
     // Punkte und Linien zeichnen

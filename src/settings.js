@@ -3,11 +3,11 @@ import './Settings.css';
 
 const Settings = ({ onSave, onClose }) => {
   const [walze1, setWalze1] = useState("I");
-  const [start1, setStart1] = useState(1);
+  const [start1, setStart1] = useState(0);
   const [walze2, setWalze2] = useState("II");
-  const [start2, setStart2] = useState(1);
+  const [start2, setStart2] = useState(0);
   const [walze3, setWalze3] = useState("III");
-  const [start3, setStart3] = useState(1);
+  const [start3, setStart3] = useState(0);
   const [reflektor, setReflektor] = useState("A");
   const [steckerbrett, setSteckerbrett] = useState([]);
   const [newPair, setNewPair] = useState("");
@@ -25,7 +25,7 @@ const Settings = ({ onSave, onClose }) => {
   };
 
   const handleSave = () => {
-    onSave({ walze1, start1, walze2, start2, walze3, start3, reflektor, steckerbrett });
+    onSave({ walze1, start1, walze2, start2: start2 + 1, walze3, start3: start3 + 1, reflektor, steckerbrett });
     onClose();
   };
 
@@ -33,7 +33,6 @@ const Settings = ({ onSave, onClose }) => {
     <div className="settings-overlay">
       <div className="settings-container">
         <h2>Einstellungen</h2>
-
         <div className="walzen-grid">
           {[walze1, walze2, walze3].map((walze, index) => {
             const selectedWalzen = [walze1, walze2, walze3];
@@ -73,8 +72,7 @@ const Settings = ({ onSave, onClose }) => {
             );
           })}
         </div>
-
-        <label>Umkehrwalze:</label>
+       <label>Umkehrwalze:</label>
         <select value={reflektor} onChange={(e) => setReflektor(e.target.value)}>
           {["A", "B", "C"].map((r) => (
             <option key={r} value={r}>

@@ -24,100 +24,95 @@ const InputOutput = () => {
     const { walze1, start1, walze2, start2, walze3, start3, reflektor, steckerbrett } = newConfig;
     const plugboardMap = new Map(
       steckerbrett.flatMap((pair) => [[pair[0], pair[1]], [pair[1], pair[0]]])
-      );
-    setEnigma(new Enigma(walze1, start1-1, walze2, start2-1, walze3, start3-1, reflektor, plugboardMap));
+    );
+    setEnigma(new Enigma(walze1, start1 - 1, walze2, start2 - 1, walze3, start3 - 1, reflektor, plugboardMap));
     setConfig(newConfig);
   };
 
   useEffect(() => {
     document.title = 'Enigma Visualizer';
   }, []);
-  
+
   const handleKeyPress = (letter) => {
     if (enigma) {
       setActiveKey(letter);
       const encodedLetter = enigma.encrypt(letter);
       setOutputKey(encodedLetter);
-
-      // Stelle sicher, dass du koordinatenMap über setKoordinatenMap aktualisierst
-      const newMap = enigma.getSignalPath(); // Du erhältst die neue Map hier
-      setKoordinatenMap(newMap); // Aktualisiere den Zustand mit der neuen Map
+      const newMap = enigma.getSignalPath();
+      setKoordinatenMap(newMap);
     }
   };
 
-  if (!config) {
-    return (
-      <div className="container">
-        {/* Header und Footer nur anzeigen, wenn showSettings false ist */}
-        {!showSettings && <Header />}
-        
-        <button onClick={() => setShowSettings(true)} className="settings-btn">
-          Einstellungen öffnen
-        </button>
-        
-        {showSettings && (
-          <Settings
-            onSave={initializeEnigma}
-            onClose={() => setShowSettings(false)}
-          />
-        )}
-        
-        <div className="warning" style={{ marginTop: '2rem', color: 'darkred' }}>
-          ⚠️ Bitte zuerst die Enigma-Einstellungen festlegen.
-        </div>
-        
-        {!showSettings && <Footer />}
-      </div>
-    );
-  }
-
   return (
-    <div className="container">
-      {/* Header und Footer nur anzeigen, wenn showSettings false ist */}
+    <div className="app">
       {!showSettings && <Header />}
-      
-      <button onClick={() => setShowSettings(true)} className="settings-btn">
-        Einstellungen
-      </button>
-      
-      {showSettings && <Settings onSave={initializeEnigma} onClose={() => setShowSettings(false)} />}
-      
-      <br />
 
-      {/* Neu: Visualisierung */}
+      <main className="container">
+  {/* SETTINGS BUTTON FALL 1: Noch keine Config => Zeige Button oben */}
+  {!config && (
+    <button onClick={() => setShowSettings(true)} className="settings-btn">
+      Einstellungen öffnen
+    </button>
+  )}
+
+  {/* SETTINGS UI */}
+  {showSettings && (
+    <Settings
+      onSave={initializeEnigma}
+      onClose={() => setShowSettings(false)}
+    />
+  )}
+
+  {/* WARNUNG WENN KEINE CONFIG */}
+  {!config && (
+    <div className="warning" style={{ marginTop: '2rem', color: 'darkred' }}>
+      ⚠️ Bitte zuerst die Enigma-Einstellungen festlegen.
+    </div>
+  )}
+
+  {/* SETTINGS BUTTON FALL 2: Config vorhanden => Zeige Button über Canvas */}
+  {config && (
+    <>
+      <div className="settings-button-wrapper">
+        <button onClick={() => setShowSettings(true)} className="settings-btn">
+          Einstellungen
+        </button>
+      </div>
+
       <EnigmaVisualizer koordinatenMap={koordinatenMap} enigma={enigma} />
+               <h2>Output</h2>
+            <div className="keyboard">
+              {keyboardLayout.map((row, rowIndex) => (
+                <div key={rowIndex} className="keyboard-row">
+                  {row.map((letter) => (
+                    <button key={letter} className={`key ${outputKey === letter ? "output" : ""}`}>
+                      {letter}
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
 
-      <h2>Output</h2>
-      <div className="keyboard">
-        {keyboardLayout.map((row, rowIndex) => (
-          <div key={rowIndex} className="keyboard-row">
-            {row.map((letter) => (
-              <button key={letter} className={`key ${outputKey === letter ? "output" : ""}`}>
-                {letter}
-              </button>
-            ))}
-          </div>
-        ))}
-      </div>
+            <h2>Input</h2>
+            <div className="keyboard">
+              {keyboardLayout.map((row, rowIndex) => (
+                <div key={rowIndex} className="keyboard-row">
+                  {row.map((letter) => (
+                    <button
+                      key={letter}
+                      className={`key ${activeKey === letter ? "active" : ""}`}
+                      onClick={() => handleKeyPress(letter)}
+                    >
+                      {letter}
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </main>
 
-      <h2>Input</h2>
-      <div className="keyboard">
-        {keyboardLayout.map((row, rowIndex) => (
-          <div key={rowIndex} className="keyboard-row">
-            {row.map((letter) => (
-              <button
-                key={letter}
-                className={`key ${activeKey === letter ? "active" : ""}`}
-                onClick={() => handleKeyPress(letter)}
-              >
-                {letter}
-              </button>
-            ))}
-          </div>
-        ))}
-      </div>
-
-      {/* Footer nur anzeigen, wenn showSettings false ist */}
       {!showSettings && <Footer />}
     </div>
   );
