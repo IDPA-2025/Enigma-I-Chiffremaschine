@@ -1,7 +1,7 @@
 const Scrambler = require('./Scrambler.js');
 const Reflektor = require("./Reflektor.js");
 const Walze = require("./Walze.js");
-const Plugboard = require("./StecherBrett.js");
+const Plugboard = require("./SteckerBrett.js");
 
 const newMap = new Map();
 class Enigma {
