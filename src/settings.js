@@ -84,13 +84,17 @@ const Settings = ({ onSave, onClose }) => {
         <h3>Steckerbrett</h3>
         <input type="text" maxLength="2" value={newPair} onChange={(e) => setNewPair(e.target.value.toUpperCase())} />
         <button onClick={() => {
-          if (newPair.length === 2 && newPair[0] !== newPair[1]) {
-            const pairArray = newPair.split("");
-            if (!steckerbrett.some(pair => pair.includes(pairArray[0]) || pair.includes(pairArray[1]))) {
-              setSteckerbrett([...steckerbrett, pairArray]);
-              setNewPair("");
-            }
-          }
+          
+          const isValidPair = /^[A-Z]{2}$/.test(newPair) && newPair[0] !== newPair[1];
+
+if (isValidPair) {
+  const pairArray = newPair.split("");
+  if (!steckerbrett.some(pair => pair.includes(pairArray[0]) || pair.includes(pairArray[1]))) {
+    setSteckerbrett([...steckerbrett, pairArray]);
+    setNewPair("");
+  }
+}
+
         }}>
           Paar hinzufügen
         </button>

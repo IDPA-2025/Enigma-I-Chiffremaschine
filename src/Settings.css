@@ -17,6 +17,8 @@
   padding: 2rem;
   border-radius: 16px;
   width: 600px;
+  max-height: 90vh;  /* Maximale Höhe der Container (90% der Viewport-Höhe) */
+  overflow-y: auto;  /* Ermöglicht vertikales Scrollen */
   box-shadow: 0 0 20px rgba(54, 54, 54, 0.7);
   border: 2px solid #000000;
 }
