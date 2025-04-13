@@ -3,9 +3,12 @@ const Reflektor = require("./Reflektor.js");
 const Walze = require("./Walze.js");
 const Plugboard = require("./SteckerBrett.js");
 
-const newMap = new Map();
+
+// Enigma-Klasse, die die gesamte Logik der Enigma zusammenfügt
 class Enigma {
 
+    // Konstruktor der Enigma-Klasse
+    // Initialisiert die Walzen, den Reflektor und das Steckerbrett
     constructor(W1, startW1, W2, startW2, W3, startW3, Reflector, plugboardMap) {
         this.plugboard = new Plugboard(plugboardMap); 
         this.r = new Reflektor(Reflector);
@@ -14,41 +17,41 @@ class Enigma {
         this.Walze1 = new Walze(W1, startW1, this.Walze2);
     }
 
+    //Verschlüsselt ein Buchstaben durch die Walzen und das Steckerbrett
     scramble(character) {
-        let transformedChar = this.plugboard.scramble(character, "hin"); // Hinweg Plugboard
-        transformedChar = this.Walze1.scramble(transformedChar);         // Walzen
-        transformedChar = this.plugboard.scramble(transformedChar, "zurück"); // Rückweg Plugboard ✔
+        let transformedChar = this.plugboard.scramble(character, "hin"); 
+        transformedChar = this.Walze1.scramble(transformedChar);         
+        transformedChar = this.plugboard.scramble(transformedChar, "zurück"); 
         
         return transformedChar;
     }
+
+    //Rotiert die Walzen
+    // Wenn Walze 1 oder Walze 2 den Notch erreicht haben, rotiert sich die nächste Walze
     rotateWalzen() {
         const notch1 = this.Walze1.getNotchPosition();
         const notch2 = this.Walze2.getNotchPosition();
-    
-        // Double-Stepping: Wenn Walze1 an ihrer Notch ist, rotiert Walze2.
-        // Wenn Walze2 AN IHRER NOTCH ist, rotiert Walze3 – unabhängig von Walze1.
         const walze1AtNotch = this.Walze1.position === notch1;
         const walze2AtNotch = this.Walze2.position === notch2;
-    
         if (walze2AtNotch) {
-            this.Walze3.rotateWalze(); // Linke Walze
+            this.Walze3.rotateWalze(); 
         }
-    
         if (walze1AtNotch || walze2AtNotch) {
-            this.Walze2.rotateWalze(); // Mittlere Walze rotiert auch bei Double-Stepping
+            this.Walze2.rotateWalze(); 
         }
         console.log(`Rotation: W1=${this.Walze1.position}, W2=${this.Walze2.position}, W3=${this.Walze3.position}`);
-        this.Walze1.rotateWalze(); // Rechte Walze immer
+        this.Walze1.rotateWalze();
     }
     
     
 
-  
+    // Methode zur Verschlüsselung eines einzelnen Zeichens
+    //fügt scramble() und rotateWalzen() zusammen
     encrypt(character) {
         Scrambler.num = 0;
         Scrambler.deletePathmap();
         Scrambler.counter = 60;
-        this.rotateWalzen(); // ✅ Rotiere zuerst – wie in echter Enigma!
+        this.rotateWalzen(); 
         const encryptedChar = this.scramble(character);
         if (character === encryptedChar) {
             throw new Error("Error: Character cannot be the same after encryption.");
@@ -57,7 +60,7 @@ class Enigma {
     }
     
 
-    
+    //übergiebt die Positionen der Buchstaben durch die Walzen und das Steckerbrett in Form einer Map
     getSignalPath() {
         console.log(Scrambler.pathMap);
         return Scrambler.pathMap;   

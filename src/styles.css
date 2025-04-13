@@ -23,7 +23,7 @@ body {
   color: #ffffff;
   font-family: 'Georgia', serif;
   padding: 2rem;
-  padding-top: 4rem;  /* Platz für den Header */
+  padding-top: 4rem; 
   padding-bottom: 3rem;
 }
 
@@ -95,6 +95,7 @@ body {
 }
 .app-header {
   width: 100%;
+  height: 10%;
   background-color: #3b3b3b;
   color: #f5f0e1;
   text-align: center;

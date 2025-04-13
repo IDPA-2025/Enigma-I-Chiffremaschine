@@ -1,6 +1,9 @@
 
     const Scrambler = require('./Scrambler.js');
 
+
+    // Mapping der Walzen und ihrer Rotationsbuchstaben
+    // Diese Buchstaben bestimmen, wann die nächste Walze rotiert
     const WalzeRotateMap = new Map();
     WalzeRotateMap.set("I", "Q");
     WalzeRotateMap.set("II", "E");
@@ -8,6 +11,8 @@
     WalzeRotateMap.set("IV", "J");
     WalzeRotateMap.set("V", "Z");
 
+
+    // Mapping der Walzen und ihrer Schlüsselalphabeten
     const WalzeKeyMap = new Map();
     WalzeKeyMap.set("I",   "EKMFLGDQVZNTOWYHXUSPAIBRCJ");
     WalzeKeyMap.set("II",  "AJDKSIRUXBLHWTMCQGZNPYFVOE");
@@ -15,65 +20,63 @@
     WalzeKeyMap.set("IV",  "ESOVPZJAYQUIRHXLNFTGKDCMWB");
     WalzeKeyMap.set("V",   "VZBRGITYUPSDNHLXAWMJQOFECK");
 
-class Walze extends Scrambler{
-    constructor(type, position, nextScrambler){
-        super();
+
+    // Walze-Klasse, die die Logik der Walzen implementiert
+    class Walze extends Scrambler{
+
+        // Konstruktor der Walze-Klasse
+        // Initialisiert die Walze mit Typ, Startposition und der nächsten Walze/Reflektor
+        constructor(type, position, nextScrambler){
+            super();
 
         this.KeyAlphabet = WalzeKeyMap.get(type);
         this.nextRotate = WalzeRotateMap.get(type);
         this.position = position;
         this.nextScrambler = nextScrambler;
     }
+    // Gibt die Position des Buchstabens im Alphabet zurück
     getPosition(character){
         const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         let p = Scrambler.getCharPosition(character);
          p = (p - this.position + 26) % 26; 
         return Alphabet.charAt(p);
     }
+
+    // Gibt die Position des Buchstabens im KeyAlphabet zurück
     getPositionKeyAlphabet(character){
        return this.KeyAlphabet.indexOf(character); 
     }
+
+    // Gibt die Position des Notches zurück
     getNotchPosition() {
         return Scrambler.getCharPosition(this.nextRotate);
     }
     
-
-    
-    
+    // Methode zur Verschlüsselung eines einzelnen Zeichens
+    // Diese Methode wird rekursiv aufgerufen, um den Buchstaben durch die Walze und die nächste Walze/Reflektor zu verschlüsseln
+    // Dabei wird die Position der Walze berücksichtigt
+    // und der Buchstabe wird entsprechend transformiert
     scramble(character) {
         const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    
-        // Vorwärts Richtung – VOR Weiterleitung an nächste Walze
         Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
         Scrambler.num++;
         Scrambler.counter += 90;
-    
         console.log(`Walze (vorwärts): input=${character}, Position=${this.position}`);
-    
-        // Step 1: Input verschoben um Position, dann aus KeyAlphabet lesen
         let p = (Scrambler.getCharPosition(character) + this.position) % 26;
         character = this.KeyAlphabet.charAt(p);
-    
-        // Step 2: Weiter an nächste Walze (oder Reflektor)
         character = this.nextScrambler.scramble(character);
-    
-        // Rückwärts Richtung – NACH Rückgabe von nächster Walze/Reflektor
         console.log(`Walze (rückwärts): input=${character}, Position=${this.position}`);
-    
-        // Step 3: Finde Buchstaben im KeyAlphabet
         p = this.KeyAlphabet.indexOf(character);
         p = (p - this.position + 26) % 26;
         character = Alphabet.charAt(p);
-    
-        // Logging & Map-Update für Rückweg
         Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
         Scrambler.num++;
         Scrambler.counter -= 90;
-    
         return character;
     }
     
-
+    // Methode zur Rotation der Walze
+    // Diese Methode wird aufgerufen, wenn die Walze rotiert werden muss
     rotateWalze() {
         this.position = (this.position + 1) % 26;
     }
