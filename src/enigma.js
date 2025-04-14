@@ -51,11 +51,16 @@ class Enigma {
         Scrambler.num = 0;
         Scrambler.deletePathmap();
         Scrambler.counter = 60;
+        Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
+        Scrambler.num++;
+        Scrambler.counter += 90;
         this.rotateWalzen(); 
         const encryptedChar = this.scramble(character);
         if (character === encryptedChar) {
             throw new Error("Error: Character cannot be the same after encryption.");
         }
+        Scrambler.counter -= 90;
+        Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(encryptedChar)]);
         return encryptedChar;
     }
     

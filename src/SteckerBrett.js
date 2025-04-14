@@ -23,8 +23,8 @@ class Plugboard extends Scrambler {
     scramble(letter, phase = "hin") {
         const mappedLetter = this.plugboardMap.get(letter) || letter;
         if (phase === "hin") {
-            Scrambler.counter = 60;
-            Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(letter)]);
+           
+            Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(mappedLetter)]);
             Scrambler.num++;
             Scrambler.counter += 90;
         } else if (phase === "zurück") {

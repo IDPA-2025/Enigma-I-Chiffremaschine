@@ -58,12 +58,12 @@
     // und der Buchstabe wird entsprechend transformiert
     scramble(character) {
         const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
-        Scrambler.num++;
-        Scrambler.counter += 90;
         console.log(`Walze (vorwärts): input=${character}, Position=${this.position}`);
         let p = (Scrambler.getCharPosition(character) + this.position) % 26;
         character = this.KeyAlphabet.charAt(p);
+        Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
+        Scrambler.num++;
+        Scrambler.counter += 90;
         character = this.nextScrambler.scramble(character);
         console.log(`Walze (rückwärts): input=${character}, Position=${this.position}`);
         p = this.KeyAlphabet.indexOf(character);

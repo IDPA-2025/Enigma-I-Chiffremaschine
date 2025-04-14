@@ -23,8 +23,7 @@
         // und gibt den reflektierten Buchstaben zurück
         scramble(character) {
             console.log("Start Reflektor");
-            Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(character)]);
-            Scrambler.num++;
+        
             const position = Scrambler.getCharPosition(character);
             const reflectedChar = this.KeyAlphabet.charAt(position);
             Scrambler.pathMap.set(Scrambler.num, [Scrambler.counter, Scrambler.getCharPositionForCanvas(reflectedChar)]);
