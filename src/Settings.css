@@ -17,8 +17,8 @@
   padding: 2rem;
   border-radius: 16px;
   width: 600px;
-  max-height: 90vh;  /* Maximale Höhe der Container (90% der Viewport-Höhe) */
-  overflow-y: auto;  /* Ermöglicht vertikales Scrollen */
+  max-height: 90vh;
+  overflow-y: auto;
   box-shadow: 0 0 20px rgba(54, 54, 54, 0.7);
   border: 2px solid #000000;
 }
@@ -26,13 +26,14 @@
 .walzen-grid {
   display: flex;
   flex-direction: column;
-
 }
 
 .walzen-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .walze,
@@ -48,27 +49,28 @@
 }
 
 .walze select,
-.position input {
+.position input,
+.settings-container select,
+.settings-container input[type="number"],
+.settings-container input[type="text"] {
   width: 100%;
   padding: 6px;
   background-color: #444;
   color: #fffdf6;
   border: 1px solid #999;
   border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.settings-container select:focus,
+.settings-container input[type="number"]:focus,
+.settings-container input[type="text"]:focus {
+  outline: none;
+  border-color: #ffbf00;
 }
 
 .settings-container h3 {
   color: #f5f0e1;
-}
-
-.settings-container input[type="text"] {
-  background-color: #444;
-  color: #fffdf6;
-  border: 1px solid #999;
-  padding: 6px;
-  border-radius: 6px;
-  width: 100%;
-  margin-bottom: 10px;
 }
 
 .settings-container button {
@@ -103,17 +105,4 @@ ul li {
   margin-top: 15px;
   color: #dbcbb3;
   font-weight: bold;
-}
-
-.settings-container select {
-  border: 1px solid #999;
-  padding: 6px;
-  border-radius: 6px;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-.settings-container select:focus {
-  outline: none;
-  border-color: #ffbf00;
 }

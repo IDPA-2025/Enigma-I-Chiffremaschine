@@ -48,14 +48,14 @@ const InputOutput = () => {
       {!showSettings && <Header />}
 
       <main className="container">
-  {/* SETTINGS BUTTON FALL 1: Noch keine Config => Zeige Button oben */}
+  
   {!config && (
     <button onClick={() => setShowSettings(true)} className="settings-btn">
       Einstellungen öffnen
     </button>
   )}
 
-  {/* SETTINGS UI */}
+
   {showSettings && (
     <Settings
       onSave={initializeEnigma}
@@ -63,14 +63,14 @@ const InputOutput = () => {
     />
   )}
 
-  {/* WARNUNG WENN KEINE CONFIG */}
+
   {!config && (
     <div className="warning" style={{ marginTop: '2rem', color: 'darkred' }}>
       ⚠️ Bitte zuerst die Enigma-Einstellungen festlegen.
     </div>
   )}
 
-  {/* SETTINGS BUTTON FALL 2: Config vorhanden => Zeige Button über Canvas */}
+  
   {config && (
     <>
       <div className="settings-button-wrapper">
