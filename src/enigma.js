@@ -10,6 +10,7 @@ class Enigma extends Scrambler {
     // Konstruktor der Enigma-Klasse
     // Initialisiert die Walzen, den Reflektor und das Steckerbrett
     constructor(W1, startW1, W2, startW2, W3, startW3, Reflector, plugboardMap) {
+        super();
         this.plugboard = new Plugboard(plugboardMap); 
         this.r = new Reflektor(Reflector);
         this.Walze3 = new Walze(W3, startW3, this.r);
