@@ -16,7 +16,6 @@ class Plugboard extends Scrambler {
         }
     }
 
-
     // Verschlüsselt ein Zeichen durch das Steckerbrett
     // Es wird die Value mit dem Key der Map getauscht
     // und der Buchstabe wird entsprechend transformiert

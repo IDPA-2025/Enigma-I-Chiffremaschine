@@ -5,7 +5,7 @@ const Plugboard = require("./SteckerBrett.js");
 
 
 // Enigma-Klasse, die die gesamte Logik der Enigma zusammenfügt
-class Enigma {
+class Enigma extends Scrambler {
 
     // Konstruktor der Enigma-Klasse
     // Initialisiert die Walzen, den Reflektor und das Steckerbrett
